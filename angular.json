@@ -38,7 +38,8 @@
               "crypto-js/hmac-sha256",
               "crypto-js/lib-typedarrays",
               "isomorphic-unfetch",
-              "ulid"
+              "ulid",
+              "url"
            ],
             "outputPath": "dist/app",
             "index": "src/index.html",
