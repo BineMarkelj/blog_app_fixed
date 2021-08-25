@@ -1,0 +1,118 @@
+
+<div class="toolbar">
+    <mat-toolbar color="warn">
+      <button mat-flat-button color="warn" (click)="goToHome()">
+        <mat-icon>home</mat-icon>
+      </button>
+      <span>Basic-ish AF blog webshite</span>  
+    </mat-toolbar>
+</div>
+
+  <div class="signedIf" *ngIf="show(); else notShow">
+    <h2 style="margin-right: auto;">Signed in as {{username}}</h2>
+    &nbsp;
+    &nbsp;
+    <button mat-raised-button id="button-signed" color="warn" (click)="logOut()">LogOut</button>
+  </div>
+  
+  <ng-template #notShow>
+    <div class="signedElse">
+      <h2 style="margin-right: auto;">Guest user</h2>
+      &nbsp;
+      &nbsp;
+     <button mat-raised-button id="button-signed" color="warn" (click)="logOut()">Login</button>
+    </div>
+  </ng-template>
+
+
+  <body>
+    <div class="write">
+      <div id="dopost">
+        <div class="insert">
+          <h1>Create a new blog:</h1>
+            <mat-form-field [style.width.vw]=85>
+                <mat-label>Title</mat-label>
+                <input matInput required id="posttitle">
+              </mat-form-field>
+             <br>
+
+             <br>
+              <mat-form-field class="formfield" [style.width.vw]=85 >
+                <mat-label>Text</mat-label>
+                <textarea matInput required id="posttext" rows="5"></textarea>
+              </mat-form-field>
+    
+              <br><button mat-raised-button color="primary" (click)="doPostBlog()">POST</button>
+        </div>
+    </div>
+    </div>
+
+
+
+    <br><br><br>
+
+
+
+
+    <div class="read">
+      <div id="doget"><br><br>
+        <h1>Other people's blogs:</h1>
+        <div *ngFor="let result of getResultBlogs.blogs as i" class="box">
+          <mat-card [style.width.vw]=85>
+            <h1>{{result.blog_title | uppercase }}</h1>
+            <h2>written by: {{result.blog_author}} at {{result.blog_time}}</h2> 
+            <p>{{result.blog_text}}</p>
+            <div>
+              <button (click)="doLikePrecall(result)"><mat-icon id="like" >thumb_up</mat-icon></button>
+              <button (click)="doDislikePrecall(result)"><mat-icon id="dislike" >thumb_down</mat-icon></button>
+              <p>{{result.blog_likes}} likes, {{result.blog_dislikes}} dislikes</p>
+            </div>
+            
+            <button mat-raised-button id="myBtn" (click)="btnComment(result.post_id)">Comments</button>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span (click)="spanComment()" class="close">&times;</span>
+                    <div *ngFor="let result1 of getResultComments.Items as i">
+                      <p class=commentBold>{{result1.comment_author}} at {{result1.comment_time}}:</p>
+                      <div class="commentmodify"><p> {{result1.comment_text}}</p>&nbsp;&nbsp;&nbsp;<button class="replybtn" (click)="replyChain(result1)">Reply</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="commentbutton" ><button *ngIf="result1.comment_author === username" class="cm-ed-btn" (click)="btnEditComment(result1)">Edit</button>
+                        <button *ngIf="result1.comment_author === username" class="cm-de-btn" (click)="doDeleteComment(result1.PK,result1.SK,result1.comment_author,result1.post_id)">Delete</button>
+                      </div></div>
+                      <div *ngFor="let result2 of getResultCChains.Items as i">
+                        <p *ngIf="result2.og_comment_id == result1.comment_id"  class="comment-chain" style="font-size: small;">{{result2.cchain_author}} at {{result2.cchain_time}}: {{result2.cchain_text}}</p>
+                      </div>
+                      
+                    </div><br><br>
+                    
+                    <mat-label>Write a comment</mat-label>
+                    <textarea matInput required id="posttext" placeholder="comment" id="commenttext" rows="3"></textarea>
+                    <button (click)="doPostComment()" mat-raised-button color="primary">Post comment</button>
+                </div>
+            </div>
+            &nbsp;
+            <button *ngIf="result.blog_author === username" mat-raised-button color="warn" (click)="doDeleteBlog(result.PK,result.SK,result.blog_author)">Delete</button>
+            &nbsp;
+            <button *ngIf="result.blog_author === username" mat-raised-button id="btnEd" (click)="doGetBlog(result.post_id,result.blog_author)" >Edit</button>
+            <div id="editModal" class=modal>
+            <div class="modal-content">
+              <span (click)="spanEdit()" class="closeEdit">&times;</span>
+              <p class="editBold">Edit blog: {{getResultBlog.blog_title | uppercase}}</p>
+              <textarea matInput required id="edittext" placeholder="edit" id="edittext" value={{getResultBlog.blog_text}} rows="5"></textarea>
+              <button (click)="doEditBlog()" mat-raised-button color="primary">Save edit</button>
+            </div>
+            </div>
+            <br><br><br><br>
+    
+          </mat-card>
+        </div>
+        <br>
+    </div>
+    </div>
+
+
+
+
+
+  </body>
+
+

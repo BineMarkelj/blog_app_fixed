@@ -1,0 +1,35 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<div class="back">
+
+<div class="toolbar">
+    <mat-toolbar color="warn">
+      <button mat-flat-button color="warn">
+        <mat-icon>home</mat-icon>
+      </button>
+      <span>Basic-ish AF blog webshite</span>
+    </mat-toolbar>
+</div>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="icon"><label class="fa">Sign in</label></div>
+            <div class="content">
+                <button mat-raised-button (click)="goToLogin()">Sign in</button>
+                <p>Sign in to post your first blog and read about other people!</p>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="icon"><label class="fa">Continue as guest</label></div>
+            <div class="content">
+                <button mat-raised-button (click)="goToGuest()">Continue as guest</button>
+                <p>Continue as guest user and read other people's blogs!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</div>
